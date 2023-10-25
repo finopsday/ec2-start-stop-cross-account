@@ -57,7 +57,7 @@ def lambda_handler(event, context):
                 return ec2.Instance(instance.id).start()
 
             # Realizando o stop ou start, dependendo do horário da chamada da lambda
-            if y > "19:59" or y > "07:00":
+            if y >= "07:00" and y <= "20:00":    
                 print("Entre 07AM e 19:59PM")
                 for instance in instances:
                     tags = instance.tags
@@ -66,7 +66,7 @@ def lambda_handler(event, context):
                         continue
                     start_instance(instance)
                     print(f"Starting instance {instance.id}")
-            elif y <= "06:00" or y > "20:00":
+            elif y >= "06:59" and y > "20:00":                 
                 print("Entre 20PM e 06AM")
                 for instance in instances:
                     tags = instance.tags
